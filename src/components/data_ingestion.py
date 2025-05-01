@@ -6,8 +6,13 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
+
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
 
 #if you have only varaibles, then you can use data class. But if you have some other functions inside the class, then you can use normal class.
 #use the link https://www.geeksforgeeks.org/understanding-python-dataclasses/ to understand the data class
@@ -56,4 +61,7 @@ if __name__=="__main__":
     train_data,test_data=obj.initiate_data_ingestion()
 
     data_transformation=DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
+    train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)#we are not using the preprocessor object here because we have already created a pickle file for that(watch tutorial 6 at 19:00), so we are using _ to ignore it.
+
+    modeltrainer=ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
